@@ -40,8 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IMetodoNumerico.cs" />
+    <Compile Include="Funciones\IFuncion.cs" />
+    <Compile Include="MetodosNumericos\Euler.cs" />
+    <Compile Include="MetodosNumericos\EulerMejorado.cs" />
+    <Compile Include="MetodosNumericos\IMetodoNumerico.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="MetodosNumericos\RoungeKutta.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
