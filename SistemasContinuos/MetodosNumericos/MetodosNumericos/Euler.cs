@@ -8,7 +8,7 @@ namespace MetodosNumericos.MetodosNumericos
         private readonly decimal _h;
         private readonly IFuncion _funcion;
 
-        public Euler(decimal h, IFuncion funcion, decimal y0, decimal yPrima0)
+        public Euler(decimal h, IFuncion funcion, decimal y0)
         {
             if (h <= 0)
                 throw new NotSupportedException("El valor de h debe ser positivo");
@@ -19,14 +19,13 @@ namespace MetodosNumericos.MetodosNumericos
             _h = h;
             _funcion = funcion;
             Y = y0;
-            Yprima = yPrima0;
         }
 
         public void CalcularSiguiente()
         {
-            Y += _h * Yprima;
-
             Yprima = _funcion.Calcular(Y);
+
+            Y += _h * Yprima;
         }
 
         public decimal Y { get; protected set; }
