@@ -2,6 +2,8 @@
 {
     public interface IFuncion
     {
-        decimal Calcular(decimal y);
+        int Orden();
+        decimal CalcularDerivada(decimal y);
+        decimal CalcularDerivadaSegunda(decimal y, decimal yPrima);
     }
 }
