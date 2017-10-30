@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -22,7 +23,7 @@ namespace TP6
 
         private delegate void LimpiarDelegate(Chart grafico, int serie);
         private delegate void PuntoDelegate(Chart grafico, DataPoint punto, int serie);
-        private delegate void ResultadoDelegate(TextBox txt, decimal resultado);
+        private delegate void ResultadoDelegate(TextBox txt, string resultado);
 
         private bool _cancelar;
 
@@ -33,7 +34,6 @@ namespace TP6
             Thread.CurrentThread.CurrentUICulture = _culture;
 
             InitializeComponent();
-            //DoubleBuffer(graph_optimo);
         }
 
         private void rb_euler_CheckedChanged(object sender, EventArgs e)
@@ -61,41 +61,28 @@ namespace TP6
 
             var start = new ParameterizedThreadStart(o => Calcular((int)o));
 
-            if (!string.IsNullOrEmpty(txt_c1.Text))
+            btn_detener.Enabled = true;
+            
+            _calcularC1Thread = new Thread(start)
             {
-                
-                _calcularC1Thread = new Thread(start)
-                {
-                    CurrentCulture = _culture,
-                    CurrentUICulture = _culture
-                };
+                CurrentCulture = _culture,
+                CurrentUICulture = _culture
+            };
+            _calcularC1Thread.Start(1);
 
-                _calcularC1Thread.Start(1);
-            }
-
-            if (!string.IsNullOrEmpty(txt_c2.Text))
+            _calcularC2Thread = new Thread(start)
             {
+                CurrentCulture = _culture,
+                CurrentUICulture = _culture
+            };
+            _calcularC2Thread.Start(2);
 
-                _calcularC2Thread = new Thread(start)
-                {
-                    CurrentCulture = _culture,
-                    CurrentUICulture = _culture
-                };
-
-                _calcularC2Thread.Start(2);
-            }
-
-            if (!string.IsNullOrEmpty(txt_c3.Text))
+            _calcularC3Thread = new Thread(start)
             {
-
-                _calcularC3Thread = new Thread(start)
-                {
-                    CurrentCulture = _culture,
-                    CurrentUICulture = _culture
-                };
-
-                _calcularC3Thread.Start(3);
-            }
+                CurrentCulture = _culture,
+                CurrentUICulture = _culture
+            };
+            _calcularC3Thread.Start(3);
         }
 
         private void Calcular(int simulacion)
@@ -109,30 +96,54 @@ namespace TP6
             Invoke(limpiarInstancia, graph_y_vs_t, simulacion -1);
             Invoke(limpiarInstancia, graph_yPrima_vs_y, simulacion -1);
 
-            var y0 = decimal.Parse(txt_y_0.Text);
-            var yPrima0 = decimal.Parse(txt_y_prima_0.Text);
-            var h = decimal.Parse(txt_h.Text);
-
             decimal c;
             Control resultado;
+            Control estado;
 
             if (simulacion == 1)
             {
+                if (string.IsNullOrEmpty(txt_c1.Text))
+                {
+                    Invoke(resultadoInstancia, txt_tiempo_c1, string.Empty);
+                    Invoke(resultadoInstancia, txt_paso_c1, string.Empty);
+                    return;
+                }
                 c = decimal.Parse(txt_c1.Text);
                 resultado = txt_tiempo_c1;
+                estado = txt_paso_c1;
             }
             else if (simulacion == 2)
             {
+                if (string.IsNullOrEmpty(txt_c2.Text))
+                {
+                    Invoke(resultadoInstancia, txt_tiempo_c2, string.Empty);
+                    Invoke(resultadoInstancia, txt_paso_c2, string.Empty);
+                    return;
+                }
                 c = decimal.Parse(txt_c2.Text);
                 resultado = txt_tiempo_c2;
+                estado = txt_paso_c2;
             }
             else
             {
+                if (string.IsNullOrEmpty(txt_c3.Text))
+                {
+                    Invoke(resultadoInstancia, txt_tiempo_c3, string.Empty);
+                    Invoke(resultadoInstancia, txt_paso_c3, string.Empty);
+                    return;
+                }
                 c = decimal.Parse(txt_c3.Text);
                 resultado = txt_tiempo_c3;
+                estado = txt_paso_c3;
             }
 
+            var y0 = decimal.Parse(txt_y_0.Text);
+            var yPrima0 = decimal.Parse(txt_y_prima_0.Text);
+            var h = decimal.Parse(txt_h.Text);
+            
             decimal t = 0;
+            var paso = 0;
+            var pasos = decimal.Parse(txt_pasos.Text);
 
             var funcion = new FuncionTp6(c);
 
@@ -151,10 +162,12 @@ namespace TP6
             Invoke(puntoInstancia, graph_y_vs_t, puntoY, simulacion - 1);
             Invoke(puntoInstancia, graph_yPrima_vs_y, puntoYprima, simulacion - 1);
 
-            while (!funcion.Estable(metodo.Y(), metodo.Yprima()))
+            while (!funcion.Estable(metodo.Y(), metodo.Yprima()) && paso <= pasos)
             {
                 if (_cancelar)
                     break;
+
+                paso++;
 
                 t += h;
                 metodo.CalcularSiguiente();
@@ -164,25 +177,25 @@ namespace TP6
 
                 Invoke(puntoInstancia, graph_y_vs_t, puntoY, simulacion - 1);
                 Invoke(puntoInstancia, graph_yPrima_vs_y, puntoYprima, simulacion - 1);
+
+                Invoke(resultadoInstancia, estado, paso.ToString());
             }
 
-
-            var tRound = decimal.Round(t, Decimales);
-
-            Invoke(resultadoInstancia, resultado, tRound);
+            Invoke(resultadoInstancia, resultado, decimal.Round(t, Decimales).ToString());
         }
 
         private void btn_optimo_Click(object sender, EventArgs e)
         {
             if (!FormularioValidoOptimo())
                 return;
+            
+            btn_detener.Enabled = true;
 
             _calcularOptimoThread = new Thread(ObtenerOptimo)
             {
                 CurrentCulture = _culture,
                 CurrentUICulture = _culture
             };
-
             _calcularOptimoThread.Start();
         }
 
@@ -252,8 +265,8 @@ namespace TP6
             var tMinRound = decimal.Round((decimal)tiempoMinimo, Decimales);
             var cOptRound = decimal.Round((decimal)cOptimo, Decimales);
 
-            Invoke(resultadoInstancia, txt_c_optimo, cOptRound);
-            Invoke(resultadoInstancia, txt_tiempo_optimo, tMinRound);
+            Invoke(resultadoInstancia, txt_tiempo_optimo, tMinRound.ToString());
+            Invoke(resultadoInstancia, txt_c_optimo, cOptRound.ToString());
 
             MessageBox.Show(
                 $@"El valor óptimo de c es {cOptRound} con un tiempo de establecimiento de {tMinRound}",
@@ -271,9 +284,9 @@ namespace TP6
             grafico.Series[serie].Points.Add(punto);
         }
 
-        private void MostrarResultado(TextBox txt, decimal resultado)
+        private void MostrarResultado(TextBox txt, string resultado)
         {
-            txt.Text = resultado.ToString();
+            txt.Text = resultado;
         }
 
         private bool FormularioValidoCalcular()
@@ -417,14 +430,13 @@ namespace TP6
             _cancelar = true;
         }
 
-        private void Tp6_FormClosing(object sender, FormClosingEventArgs e)
+        private void Tp6_FormClosing(object sender, CancelEventArgs e)
         {
             if (Activo(_calcularC1Thread) ||
                 Activo(_calcularC2Thread) ||
                 Activo(_calcularC3Thread) ||
                 Activo(_calcularOptimoThread))
             {
-
                 _cancelar = true;
                 e.Cancel = true;
             }
@@ -435,9 +447,9 @@ namespace TP6
             if (thread == null
                 || thread.ThreadState.Equals(ThreadState.Unstarted)
                 || thread.ThreadState.Equals(ThreadState.Stopped))
-                return true;
+                return false;
 
-            return false;
+            return true;
         }
     }
 }
