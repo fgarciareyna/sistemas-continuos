@@ -7,6 +7,9 @@ namespace MetodosNumericos.MetodosNumericos
     {
         private readonly decimal _h;
         private readonly IFuncion _funcion;
+        private decimal _y;
+        private decimal _yPrima;
+        private decimal _ySegunda;
 
         public Euler(decimal h, IFuncion funcion, decimal y0)
         {
@@ -21,8 +24,8 @@ namespace MetodosNumericos.MetodosNumericos
 
             _h = h;
             _funcion = funcion;
-            Y = y0;
-            Yprima = CalcularDerivada();
+            _y = y0;
+            _yPrima = CalcularDerivada();
         }
 
         public Euler(decimal h, IFuncion funcion, decimal y0, decimal yPrima0)
@@ -38,38 +41,49 @@ namespace MetodosNumericos.MetodosNumericos
 
             _h = h;
             _funcion = funcion;
-            Y = y0;
-            Yprima = yPrima0;
-            Ysegunda = CalcularDerivadaSegunda();
+            _y = y0;
+            _yPrima = yPrima0;
+            _ySegunda = CalcularDerivadaSegunda();
         }
 
         public void CalcularSiguiente()
         {
             if (_funcion.Orden() == 1)
             {
-                Y += _h * Yprima;
-                Yprima = CalcularDerivada();
+                _y += _h * _yPrima;
+                _yPrima = CalcularDerivada();
             }
             else
             {
-                Y += _h * Yprima;
-                Yprima += _h * Ysegunda;
-                Ysegunda = CalcularDerivadaSegunda();
+                _y += _h * _yPrima;
+                _yPrima += _h * _ySegunda;
+                _ySegunda = CalcularDerivadaSegunda();
             }
         }
 
         private decimal CalcularDerivada()
         {
-            return _funcion.CalcularDerivada(Y);
+            return _funcion.CalcularDerivada(_y);
         }
 
         private decimal CalcularDerivadaSegunda()
         {
-            return _funcion.CalcularDerivadaSegunda(Y, Yprima);
+            return _funcion.CalcularDerivadaSegunda(_y, _yPrima);
         }
 
-        public decimal Y { get; protected set; }
-        public decimal Yprima { get; protected set; }
-        public decimal Ysegunda { get; protected set; }
+        public decimal Y()
+        {
+            return _y;
+        }
+
+        public decimal Yprima()
+        {
+            return _yPrima;
+        }
+
+        public decimal Ysegunda()
+        {
+            return _ySegunda;
+        }
     }
 }

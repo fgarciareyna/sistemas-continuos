@@ -40,7 +40,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Funciones\FuncionTp6.cs" />
     <Compile Include="Funciones\IFuncion.cs" />
     <Compile Include="MetodosNumericos\Euler.cs" />
     <Compile Include="MetodosNumericos\EulerMejorado.cs" />

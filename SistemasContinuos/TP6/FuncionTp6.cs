@@ -1,6 +1,7 @@
 ﻿using System;
+using MetodosNumericos.Funciones;
 
-namespace MetodosNumericos.Funciones
+namespace TP6
 {
     public class FuncionTp6 : IFuncion
     {
@@ -24,6 +25,11 @@ namespace MetodosNumericos.Funciones
         public decimal CalcularDerivadaSegunda(decimal y, decimal yPrima)
         {
             return -2 * (decimal)Math.Sin((double)y) - Math.Sign(_c * y + yPrima);
+        }
+
+        public bool Estable(decimal y, decimal yPrima)
+        {
+            return Math.Abs((double)y) < 0.005 && Math.Abs((double)yPrima) < 0.01;
         }
     }
 }

@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
+using MetodosNumericos.MetodosNumericos;
 
 namespace TP6
 {
@@ -18,7 +21,9 @@ namespace TP6
         private Thread _calcularC3Thread;
         private Thread _calcularOptimoThread;
 
-        private delegate void PuntoDelegate(Point punto);
+        private delegate void LimpiarDelegate(Chart grafico);
+        private delegate void PuntoDelegate(Chart grafico, DataPoint punto);
+        private delegate void ResultadoDelegate(TextBox txt, decimal resultado);
 
         private bool _cancelar;
 
@@ -62,17 +67,108 @@ namespace TP6
             
         }
 
-        private bool Estable(double y, double yPrima)
-        {
-            return Math.Abs(y) < 0.005 && Math.Abs(yPrima) < 0.01;
-        }
-
         private void btn_optimo_Click(object sender, EventArgs e)
         {
             if (!FormularioValidoOptimo())
                 return;
 
+            _calcularOptimoThread = new Thread(ObtenerOptimo)
+            {
+                CurrentCulture = _culture,
+                CurrentUICulture = _culture,
+            };
+
+            _calcularOptimoThread.Start();
+        }
+
+        private void ObtenerOptimo()
+        {
             _cancelar = false;
+
+            var limpiarInstancia = new LimpiarDelegate(LimpiarGrafico);
+            var puntoInstancia = new PuntoDelegate(AgregarPunto);
+            var resultadoInstancia = new ResultadoDelegate(MostrarResultado);
+
+            Invoke(limpiarInstancia, graph_optimo);
+
+            var y0 = decimal.Parse(txt_y_0.Text);
+            var yPrima0 = decimal.Parse(txt_y_prima_0.Text);
+            var h = decimal.Parse(txt_h.Text);
+
+            var min = decimal.Parse(txt_min.Text);
+            var max = decimal.Parse(txt_max.Text);
+            var paso = (max - min) / 100;
+
+            var valores = new List<decimal>();
+            for (var i = min; i < max + paso; i+= paso)
+            {
+                valores.Add(i);
+            }
+
+            var puntos = new List<DataPoint>();
+
+            foreach (var c in valores)
+            {
+                if (_cancelar)
+                    break;
+
+                decimal t = 0;
+
+                var funcion = new FuncionTp6(c);
+
+                IMetodoNumerico metodo;
+
+                if (rb_euler.Checked)
+                    metodo = new Euler(h, funcion, y0, yPrima0);
+                else if (rb_euler_mejorado.Checked)
+                    metodo = new EulerMejorado(h, funcion, y0, yPrima0);
+                else
+                    metodo = new RungeKutta(h, funcion, y0, yPrima0);
+
+                while (!funcion.Estable(metodo.Y(), metodo.Yprima()))
+                {
+                    if (_cancelar)
+                        break;
+
+                    t += h;
+                    metodo.CalcularSiguiente();
+                }
+
+                var punto = new DataPoint((double) c, (double) t);
+
+                puntos.Add(punto);
+
+                Invoke(puntoInstancia, graph_optimo, punto);
+            }
+
+            var tiempoMinimo = puntos.Min(p => p.YValues[0]);
+            var cOptimo = puntos.Single(p => Math.Abs(p.YValues[0] - tiempoMinimo) < (double)h).XValue;
+
+            var tMinRound = decimal.Round((decimal)tiempoMinimo, Decimales);
+            var cOptRound = decimal.Round((decimal)cOptimo, Decimales);
+
+            Invoke(resultadoInstancia, txt_c_optimo, cOptRound);
+            Invoke(resultadoInstancia, txt_tiempo_optimo, tMinRound);
+
+            MessageBox.Show(
+                $@"El valor óptimo de c es {cOptRound} con un tiempo de establecimiento de {tMinRound}",
+                @"Resultado");
+        }
+
+        private void LimpiarGrafico(Chart grafico)
+        {
+            grafico.Series[0].Points.Clear();
+            grafico.Visible = true;
+        }
+
+        private void AgregarPunto(Chart grafico, DataPoint punto)
+        {
+            grafico.Series[0].Points.Add(punto);
+        }
+
+        private void MostrarResultado(TextBox txt, decimal resultado)
+        {
+            txt.Text = resultado.ToString();
         }
 
         private bool FormularioValidoCalcular()

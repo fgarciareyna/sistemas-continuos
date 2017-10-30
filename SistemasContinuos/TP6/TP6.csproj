@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FuncionTp6.cs" />
     <Compile Include="Tp6.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -79,6 +80,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MetodosNumericos\MetodosNumericos.csproj">
+      <Project>{64C51A96-98D8-4C09-AAF6-9785CCFEBED4}</Project>
+      <Name>MetodosNumericos</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

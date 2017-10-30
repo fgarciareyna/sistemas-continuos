@@ -7,6 +7,9 @@ namespace MetodosNumericos.MetodosNumericos
     {
         private readonly decimal _h;
         private readonly IFuncion _funcion;
+        private decimal _y;
+        private decimal _yPrima;
+        private decimal _ySegunda;
 
         public EulerMejorado(decimal h, IFuncion funcion, decimal y0)
         {
@@ -21,8 +24,8 @@ namespace MetodosNumericos.MetodosNumericos
 
             _h = h;
             _funcion = funcion;
-            Y = y0;
-            Yprima = CalcularDerivada();
+            _y = y0;
+            _yPrima = CalcularDerivada();
         }
 
         public EulerMejorado(decimal h, IFuncion funcion, decimal y0, decimal yPrima0)
@@ -33,52 +36,63 @@ namespace MetodosNumericos.MetodosNumericos
             if (funcion == null)
                 throw new NotSupportedException("La función es requerida");
 
-            if (funcion.Orden() != 1)
+            if (funcion.Orden() != 2)
                 throw new NotSupportedException("La función debe ser de segundo orden");
 
             _h = h;
             _funcion = funcion;
-            Y = y0;
-            Yprima = yPrima0;
-            Ysegunda = CalcularDerivadaSegunda();
+            _y = y0;
+            _yPrima = yPrima0;
+            _ySegunda = CalcularDerivadaSegunda();
         }
 
         public void CalcularSiguiente()
         {
             if (_funcion.Orden() == 1)
             {
-                Y += _h * Yprima;
-                Yprima = CalcularDerivada();
+                _y += _h * _yPrima;
+                _yPrima = CalcularDerivada();
             }
             else
             {
-                Y += _h * Yprima;
-                Yprima += _h * Ysegunda;
-                Ysegunda = CalcularDerivadaSegunda();
+                _y += _h * _yPrima;
+                _yPrima += _h * _ySegunda;
+                _ySegunda = CalcularDerivadaSegunda();
             }
         }
 
         private decimal CalcularDerivada()
         {
-            var k1 = _funcion.CalcularDerivada(Y);
-            var k2 = _funcion.CalcularDerivada(Y + _h * k1);
+            var k1 = _funcion.CalcularDerivada(_y);
+            var k2 = _funcion.CalcularDerivada(_y + _h * k1);
 
             return (k1 + k2) / 2;
         }
 
         private decimal CalcularDerivadaSegunda()
         {
-            var k1 = _funcion.CalcularDerivadaSegunda(Y, Yprima);
+            var k1 = _funcion.CalcularDerivadaSegunda(_y, _yPrima);
 
-            var yPrima1 = Yprima + _h * k1;
-            var y1 = Y + _h * yPrima1;
+            var yPrima1 = _yPrima + _h * k1;
+            var y1 = _y + _h * yPrima1;
             var k2 = _funcion.CalcularDerivadaSegunda(y1, yPrima1);
 
             return (k1 + k2) / 2;
         }
 
-        public decimal Y { get; protected set; }
-        public decimal Yprima { get; protected set; }
-        public decimal Ysegunda { get; protected set; }
+        public decimal Y()
+        {
+            return _y;
+        }
+
+        public decimal Yprima()
+        {
+            return _yPrima;
+        }
+
+        public decimal Ysegunda()
+        {
+            return _ySegunda;
+        }
     }
 }
