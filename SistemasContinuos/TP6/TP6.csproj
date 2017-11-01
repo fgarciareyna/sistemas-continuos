@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FuncionEstable.cs" />
     <Compile Include="FuncionTp6.cs" />
     <Compile Include="Tp6.cs">
       <SubType>Form</SubType>

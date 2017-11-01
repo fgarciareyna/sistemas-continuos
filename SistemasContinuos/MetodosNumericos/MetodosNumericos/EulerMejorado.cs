@@ -1,5 +1,4 @@
 ﻿using System;
-using MetodosNumericos.Funciones;
 
 namespace MetodosNumericos.MetodosNumericos
 {
