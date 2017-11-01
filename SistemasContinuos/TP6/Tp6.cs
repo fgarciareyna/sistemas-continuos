@@ -273,18 +273,18 @@ namespace TP6
                 @"Resultado");
         }
 
-        private void LimpiarGrafico(Chart grafico, int serie)
+        private static void LimpiarGrafico(Chart grafico, int serie)
         {
             grafico.Series[serie].Points.Clear();
             grafico.Visible = true;
         }
 
-        private void AgregarPunto(Chart grafico, DataPoint punto, int serie)
+        private static void AgregarPunto(Chart grafico, DataPoint punto, int serie)
         {
             grafico.Series[serie].Points.Add(punto);
         }
 
-        private void MostrarResultado(TextBox txt, string resultado)
+        private static void MostrarResultado(TextBox txt, string resultado)
         {
             txt.Text = resultado;
         }
@@ -313,7 +313,7 @@ namespace TP6
 
         private bool ValidarConstantes()
         {
-            var mensaje = @"Debe ingresar al menos una constante";
+            const string mensaje = "Debe ingresar al menos una constante";
 
             if (string.IsNullOrEmpty(txt_c1.Text) &&
                 string.IsNullOrEmpty(txt_c2.Text) &&
@@ -323,33 +323,28 @@ namespace TP6
                 return false;
             }
 
-            mensaje = @"Ingrese un número válido para c1";
-            double c1;
-
-            if (!string.IsNullOrEmpty(txt_c1.Text) &&
-                !double.TryParse(txt_c1.Text, out c1))
-            {
-                MensajeError(mensaje, txt_c1);
+            if (!ValidarConstante("c1", txt_c1))
                 return false;
-            }
 
-            mensaje = @"Ingrese un número válido para c2";
-            double c2;
-
-            if (!string.IsNullOrEmpty(txt_c2.Text) &&
-                !double.TryParse(txt_c2.Text, out c2))
-            {
-                MensajeError(mensaje, txt_c2);
+            if (!ValidarConstante("c2", txt_c2))
                 return false;
-            }
 
-            mensaje = @"Ingrese un número válido para c3";
-            double c3;
+            if (!ValidarConstante("c3", txt_c3))
+                return false;
 
-            if (!string.IsNullOrEmpty(txt_c3.Text) &&
-                !double.TryParse(txt_c3.Text, out c3))
+            return true;
+        }
+
+        private static bool ValidarConstante(string constante, Control txt)
+        {
+            var mensaje = $"el valor de {constante} debe estar entre 0.1 y 10";
+            double c;
+
+            if (!string.IsNullOrEmpty(txt.Text) &&
+                (!double.TryParse(txt.Text, out c)
+                || c < 0.1 || c > 10))
             {
-                MensajeError(mensaje, txt_c3);
+                MensajeError(mensaje, txt);
                 return false;
             }
 
@@ -358,7 +353,7 @@ namespace TP6
 
         private bool ValidarCondicionesIniciales()
         {
-            var mensaje = @"Ingrese un número válido para y(0)";
+            var mensaje = "Ingrese un número válido para y(0)";
             double y0;
 
             if (!double.TryParse(txt_y_0.Text, out y0))
@@ -367,7 +362,7 @@ namespace TP6
                 return false;
             }
 
-            mensaje = @"Ingrese un número válido para y'(0)";
+            mensaje = "Ingrese un número válido para y'(0)";
             double yPrima0;
 
             if (!double.TryParse(txt_y_prima_0.Text, out yPrima0))
@@ -376,10 +371,10 @@ namespace TP6
                 return false;
             }
 
-            mensaje = @"Ingrese un número válido para h";
+            mensaje = "El valor de h debe estar entre 0.0001 y 1";
             double h;
 
-            if (!double.TryParse(txt_h.Text, out h))
+            if (!double.TryParse(txt_h.Text, out h) || h < 0.0001 || h > 1)
             {
                 MensajeError(mensaje, txt_h);
                 return false;
@@ -390,7 +385,7 @@ namespace TP6
 
         private bool ValidarIntervalo()
         {
-            var mensaje = @"Ingrese un número válido para el mínimo";
+            var mensaje = "Ingrese un número válido para el mínimo";
             double min;
 
             if (!double.TryParse(txt_min.Text, out min))
@@ -399,7 +394,7 @@ namespace TP6
                 return false;
             }
 
-            mensaje = @"Ingrese un número válido para el máximo";
+            mensaje = "Ingrese un número válido para el máximo";
             double max;
 
             if (!double.TryParse(txt_max.Text, out max))
@@ -408,11 +403,20 @@ namespace TP6
                 return false;
             }
 
-            mensaje = @"El máximo debe ser mayor que el mínimo";
+            mensaje = "El máximo debe ser mayor que el mínimo";
 
             if (max <= min)
             {
                 MensajeError(mensaje, txt_max);
+                return false;
+            }
+
+            mensaje = "El valor del paso debe ser positivo y menor que el máximo";
+            double paso;
+
+            if (!double.TryParse(txt_paso.Text, out paso) || paso >= max)
+            {
+                MensajeError(mensaje, txt_paso);
                 return false;
             }
 
@@ -442,7 +446,7 @@ namespace TP6
             }
         }
 
-        private bool Activo(Thread thread)
+        private static bool Activo(Thread thread)
         {
             if (thread == null
                 || thread.ThreadState.Equals(ThreadState.Unstarted)

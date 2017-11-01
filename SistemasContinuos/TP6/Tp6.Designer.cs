@@ -28,22 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title4 = new System.Windows.Forms.DataVisualization.Charting.Title();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title5 = new System.Windows.Forms.DataVisualization.Charting.Title();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series13 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series14 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title6 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title3 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.gb_metodos = new System.Windows.Forms.GroupBox();
             this.lbl_runge_kutta = new System.Windows.Forms.LinkLabel();
             this.lk_euler_mejorado = new System.Windows.Forms.LinkLabel();
@@ -89,14 +89,16 @@
             this.graph_y_vs_t = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.graph_yPrima_vs_y = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.gb_status = new System.Windows.Forms.GroupBox();
+            this.txt_pasos = new System.Windows.Forms.TextBox();
+            this.lbl_pasos = new System.Windows.Forms.Label();
             this.txt_paso_c1 = new System.Windows.Forms.TextBox();
             this.txt_paso_c2 = new System.Windows.Forms.TextBox();
             this.txt_paso_c3 = new System.Windows.Forms.TextBox();
             this.lbl_paso_c3 = new System.Windows.Forms.Label();
             this.lbl_paso_c2 = new System.Windows.Forms.Label();
             this.lbl_paso_c1 = new System.Windows.Forms.Label();
-            this.lbl_pasos = new System.Windows.Forms.Label();
-            this.txt_pasos = new System.Windows.Forms.TextBox();
+            this.txt_paso = new System.Windows.Forms.TextBox();
+            this.lbl_paso = new System.Windows.Forms.Label();
             this.gb_metodos.SuspendLayout();
             this.gb_constantes.SuspendLayout();
             this.gb_condiciones_iniciales.SuspendLayout();
@@ -328,13 +330,15 @@
             // 
             // gb_intervalo
             // 
+            this.gb_intervalo.Controls.Add(this.txt_paso);
+            this.gb_intervalo.Controls.Add(this.lbl_paso);
             this.gb_intervalo.Controls.Add(this.txt_max);
             this.gb_intervalo.Controls.Add(this.txt_min);
             this.gb_intervalo.Controls.Add(this.lbl_max);
             this.gb_intervalo.Controls.Add(this.lbl_min);
             this.gb_intervalo.Location = new System.Drawing.Point(12, 308);
             this.gb_intervalo.Name = "gb_intervalo";
-            this.gb_intervalo.Size = new System.Drawing.Size(128, 75);
+            this.gb_intervalo.Size = new System.Drawing.Size(128, 100);
             this.gb_intervalo.TabIndex = 5;
             this.gb_intervalo.TabStop = false;
             this.gb_intervalo.Text = "Intervalo:";
@@ -515,25 +519,25 @@
             this.graph_optimo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.graph_optimo.CausesValidation = false;
-            chartArea4.AxisX.Title = "Valor de c";
-            chartArea4.AxisY.Title = "Tiempo de establecimiento (s)";
-            chartArea4.Name = "optimo";
-            this.graph_optimo.ChartAreas.Add(chartArea4);
-            legend4.Enabled = false;
-            legend4.Name = "Legend1";
-            this.graph_optimo.Legends.Add(legend4);
+            chartArea1.AxisX.Title = "Valor de c";
+            chartArea1.AxisY.Title = "Tiempo de establecimiento (s)";
+            chartArea1.Name = "optimo";
+            this.graph_optimo.ChartAreas.Add(chartArea1);
+            legend1.Enabled = false;
+            legend1.Name = "Legend1";
+            this.graph_optimo.Legends.Add(legend1);
             this.graph_optimo.Location = new System.Drawing.Point(146, 118);
             this.graph_optimo.Name = "graph_optimo";
-            series8.ChartArea = "optimo";
-            series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series8.Legend = "Legend1";
-            series8.Name = "Cálculo del óptimo";
-            this.graph_optimo.Series.Add(series8);
-            this.graph_optimo.Size = new System.Drawing.Size(1118, 265);
+            series1.ChartArea = "optimo";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series1.Legend = "Legend1";
+            series1.Name = "Cálculo del óptimo";
+            this.graph_optimo.Series.Add(series1);
+            this.graph_optimo.Size = new System.Drawing.Size(1118, 290);
             this.graph_optimo.TabIndex = 8;
-            title4.Name = "Title1";
-            title4.Text = "Búsqueda del c óptimo";
-            this.graph_optimo.Titles.Add(title4);
+            title1.Name = "Title1";
+            title1.Text = "Búsqueda del c óptimo";
+            this.graph_optimo.Titles.Add(title1);
             this.graph_optimo.Visible = false;
             // 
             // graph_y_vs_t
@@ -541,71 +545,71 @@
             this.graph_y_vs_t.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.graph_y_vs_t.CausesValidation = false;
-            chartArea5.AxisX.Title = "Tiempo (s)";
-            chartArea5.AxisY.Title = "Tita(t)";
-            chartArea5.Name = "optimo";
-            this.graph_y_vs_t.ChartAreas.Add(chartArea5);
-            legend5.Name = "Legend";
-            this.graph_y_vs_t.Legends.Add(legend5);
-            this.graph_y_vs_t.Location = new System.Drawing.Point(12, 389);
+            chartArea2.AxisX.Title = "Tiempo (s)";
+            chartArea2.AxisY.Title = "Tita(t)";
+            chartArea2.Name = "optimo";
+            this.graph_y_vs_t.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend";
+            this.graph_y_vs_t.Legends.Add(legend2);
+            this.graph_y_vs_t.Location = new System.Drawing.Point(12, 426);
             this.graph_y_vs_t.Name = "graph_y_vs_t";
-            series9.ChartArea = "optimo";
-            series9.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastPoint;
-            series9.Legend = "Legend";
-            series9.LegendText = "c1";
-            series9.Name = "c1";
-            series10.ChartArea = "optimo";
-            series10.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastPoint;
-            series10.Legend = "Legend";
-            series10.LegendText = "c2";
-            series10.Name = "c2";
-            series11.ChartArea = "optimo";
-            series11.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastPoint;
-            series11.Legend = "Legend";
-            series11.LegendText = "c3";
-            series11.Name = "c3";
-            this.graph_y_vs_t.Series.Add(series9);
-            this.graph_y_vs_t.Series.Add(series10);
-            this.graph_y_vs_t.Series.Add(series11);
+            series2.ChartArea = "optimo";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastPoint;
+            series2.Legend = "Legend";
+            series2.LegendText = "c1";
+            series2.Name = "c1";
+            series3.ChartArea = "optimo";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastPoint;
+            series3.Legend = "Legend";
+            series3.LegendText = "c2";
+            series3.Name = "c2";
+            series4.ChartArea = "optimo";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastPoint;
+            series4.Legend = "Legend";
+            series4.LegendText = "c3";
+            series4.Name = "c3";
+            this.graph_y_vs_t.Series.Add(series2);
+            this.graph_y_vs_t.Series.Add(series3);
+            this.graph_y_vs_t.Series.Add(series4);
             this.graph_y_vs_t.Size = new System.Drawing.Size(622, 377);
             this.graph_y_vs_t.TabIndex = 9;
-            title5.Name = "Title1";
-            title5.Text = "Tita(t) vs t";
-            this.graph_y_vs_t.Titles.Add(title5);
+            title2.Name = "Title1";
+            title2.Text = "Tita(t) vs t";
+            this.graph_y_vs_t.Titles.Add(title2);
             this.graph_y_vs_t.Visible = false;
             // 
             // graph_yPrima_vs_y
             // 
             this.graph_yPrima_vs_y.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.graph_yPrima_vs_y.CausesValidation = false;
-            chartArea6.AxisX.Title = "Tita(t)";
-            chartArea6.AxisY.Title = "Tita\'(t)";
-            chartArea6.Name = "optimo";
-            this.graph_yPrima_vs_y.ChartAreas.Add(chartArea6);
-            legend6.Name = "Legend1";
-            this.graph_yPrima_vs_y.Legends.Add(legend6);
-            this.graph_yPrima_vs_y.Location = new System.Drawing.Point(642, 389);
+            chartArea3.AxisX.Title = "Tita(t)";
+            chartArea3.AxisY.Title = "Tita\'(t)";
+            chartArea3.Name = "optimo";
+            this.graph_yPrima_vs_y.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.graph_yPrima_vs_y.Legends.Add(legend3);
+            this.graph_yPrima_vs_y.Location = new System.Drawing.Point(642, 426);
             this.graph_yPrima_vs_y.Name = "graph_yPrima_vs_y";
-            series12.ChartArea = "optimo";
-            series12.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastPoint;
-            series12.Legend = "Legend1";
-            series12.Name = "c1";
-            series13.ChartArea = "optimo";
-            series13.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastPoint;
-            series13.Legend = "Legend1";
-            series13.Name = "c2";
-            series14.ChartArea = "optimo";
-            series14.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastPoint;
-            series14.Legend = "Legend1";
-            series14.Name = "c3";
-            this.graph_yPrima_vs_y.Series.Add(series12);
-            this.graph_yPrima_vs_y.Series.Add(series13);
-            this.graph_yPrima_vs_y.Series.Add(series14);
+            series5.ChartArea = "optimo";
+            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastPoint;
+            series5.Legend = "Legend1";
+            series5.Name = "c1";
+            series6.ChartArea = "optimo";
+            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastPoint;
+            series6.Legend = "Legend1";
+            series6.Name = "c2";
+            series7.ChartArea = "optimo";
+            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastPoint;
+            series7.Legend = "Legend1";
+            series7.Name = "c3";
+            this.graph_yPrima_vs_y.Series.Add(series5);
+            this.graph_yPrima_vs_y.Series.Add(series6);
+            this.graph_yPrima_vs_y.Series.Add(series7);
             this.graph_yPrima_vs_y.Size = new System.Drawing.Size(622, 377);
             this.graph_yPrima_vs_y.TabIndex = 10;
-            title6.Name = "Title1";
-            title6.Text = "Tita\'(t) vs tita(t)";
-            this.graph_yPrima_vs_y.Titles.Add(title6);
+            title3.Name = "Title1";
+            title3.Text = "Tita\'(t) vs tita(t)";
+            this.graph_yPrima_vs_y.Titles.Add(title3);
             this.graph_yPrima_vs_y.Visible = false;
             // 
             // gb_status
@@ -625,6 +629,23 @@
             this.gb_status.TabIndex = 11;
             this.gb_status.TabStop = false;
             this.gb_status.Text = "Status:";
+            // 
+            // txt_pasos
+            // 
+            this.txt_pasos.Location = new System.Drawing.Point(162, 43);
+            this.txt_pasos.Name = "txt_pasos";
+            this.txt_pasos.Size = new System.Drawing.Size(80, 20);
+            this.txt_pasos.TabIndex = 13;
+            this.txt_pasos.Text = "1000";
+            // 
+            // lbl_pasos
+            // 
+            this.lbl_pasos.AutoSize = true;
+            this.lbl_pasos.Location = new System.Drawing.Point(159, 22);
+            this.lbl_pasos.Name = "lbl_pasos";
+            this.lbl_pasos.Size = new System.Drawing.Size(39, 13);
+            this.lbl_pasos.TabIndex = 12;
+            this.lbl_pasos.Text = "Pasos:";
             // 
             // txt_paso_c1
             // 
@@ -677,28 +698,28 @@
             this.lbl_paso_c1.TabIndex = 6;
             this.lbl_paso_c1.Text = "Paso c1:";
             // 
-            // lbl_pasos
+            // txt_paso
             // 
-            this.lbl_pasos.AutoSize = true;
-            this.lbl_pasos.Location = new System.Drawing.Point(159, 22);
-            this.lbl_pasos.Name = "lbl_pasos";
-            this.lbl_pasos.Size = new System.Drawing.Size(39, 13);
-            this.lbl_pasos.TabIndex = 12;
-            this.lbl_pasos.Text = "Pasos:";
+            this.txt_paso.Location = new System.Drawing.Point(39, 71);
+            this.txt_paso.Name = "txt_paso";
+            this.txt_paso.Size = new System.Drawing.Size(64, 20);
+            this.txt_paso.TabIndex = 6;
+            this.txt_paso.Text = "0.1";
             // 
-            // txt_pasos
+            // lbl_paso
             // 
-            this.txt_pasos.Location = new System.Drawing.Point(162, 43);
-            this.txt_pasos.Name = "txt_pasos";
-            this.txt_pasos.Size = new System.Drawing.Size(80, 20);
-            this.txt_pasos.TabIndex = 13;
-            this.txt_pasos.Text = "1000";
+            this.lbl_paso.AutoSize = true;
+            this.lbl_paso.Location = new System.Drawing.Point(6, 74);
+            this.lbl_paso.Name = "lbl_paso";
+            this.lbl_paso.Size = new System.Drawing.Size(34, 13);
+            this.lbl_paso.TabIndex = 5;
+            this.lbl_paso.Text = "Paso:";
             // 
             // Tp6
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1277, 778);
+            this.ClientSize = new System.Drawing.Size(1277, 815);
             this.Controls.Add(this.gb_status);
             this.Controls.Add(this.graph_yPrima_vs_y);
             this.Controls.Add(this.graph_y_vs_t);
@@ -730,6 +751,7 @@
             this.gb_status.PerformLayout();
             this.ResumeLayout(false);
             this.FormClosing += Tp6_FormClosing;
+
         }
 
         #endregion
@@ -787,6 +809,8 @@
         private System.Windows.Forms.Label lbl_paso_c3;
         private System.Windows.Forms.Label lbl_paso_c2;
         private System.Windows.Forms.Label lbl_paso_c1;
+        private System.Windows.Forms.TextBox txt_paso;
+        private System.Windows.Forms.Label lbl_paso;
     }
 }
 
