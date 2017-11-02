@@ -361,29 +361,29 @@ namespace TP6
 
         private void btn_comparar_Click(object sender, EventArgs e)
         {
-            var constantes = new List<decimal>();
-            var tiempos = new List<decimal>();
+            var constantes = new List<DataPoint>();
 
             if (!string.IsNullOrEmpty(txt_c1.Text))
             {
-                constantes.Add(decimal.Parse(txt_c1.Text));
-                tiempos.Add(decimal.Parse(txt_tiempo_c1.Text));
+                var c1 = new DataPoint(double.Parse(txt_c1.Text), double.Parse(txt_tiempo_c1.Text));
+                constantes.Add(c1);
             }
 
             if (!string.IsNullOrEmpty(txt_c2.Text))
             {
-                constantes.Add(decimal.Parse(txt_c2.Text));
-                tiempos.Add(decimal.Parse(txt_tiempo_c2.Text));
+                var c2 = new DataPoint(double.Parse(txt_c2.Text), double.Parse(txt_tiempo_c2.Text));
+                constantes.Add(c2);
             }
 
             if (!string.IsNullOrEmpty(txt_c2.Text))
             {
-                constantes.Add(decimal.Parse(txt_c2.Text));
-                tiempos.Add(decimal.Parse(txt_tiempo_c2.Text));
+                var c3 = new DataPoint(double.Parse(txt_c3.Text), double.Parse(txt_tiempo_c3.Text));
+                constantes.Add(c3);
             }
 
-            var t = tiempos.Min();
-            var c = constantes.Min();
+            var t = constantes.Min(cons => cons.YValues[0]);
+            // ReSharper disable once CompareOfFloatsByEqualityOperator
+            var c = constantes.First(cons => cons.YValues[0] == t).XValue;
 
             var mensaje = $"El mejor tiempo es {t}, con c = {c}";
             const string titulo = "Resultado";

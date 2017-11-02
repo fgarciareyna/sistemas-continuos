@@ -11,12 +11,12 @@ namespace TP6
 
         public decimal CalcularDerivada(decimal y)
         {
-            throw new System.NotImplementedException();
+            return 0;
         }
 
         public decimal CalcularDerivadaSegunda(decimal y, decimal yPrima)
         {
-            throw new System.NotImplementedException();
+            return 0;
         }
 
         public bool Estable(decimal y, decimal yPrima)
