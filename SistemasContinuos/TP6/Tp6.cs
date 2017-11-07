@@ -375,7 +375,7 @@ namespace TP6
                 constantes.Add(c2);
             }
 
-            if (!string.IsNullOrEmpty(txt_c2.Text))
+            if (!string.IsNullOrEmpty(txt_c3.Text))
             {
                 var c3 = new DataPoint(double.Parse(txt_c3.Text), double.Parse(txt_tiempo_c3.Text));
                 constantes.Add(c3);
